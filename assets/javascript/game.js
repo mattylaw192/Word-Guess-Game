@@ -11,7 +11,7 @@ var wins_Number = document.getElementById ("wins_number")
 document.onkeyup = function(event) {
 
     var userGuess = event.key.toLowerCase();
-    
+
 }
 
 
@@ -21,4 +21,6 @@ document.onkeyup = function(event) {
 
 
 
+//How do you get the correct number of _ _ _ for a word?//
 
+//How do you replace a dash with a user guess?//
