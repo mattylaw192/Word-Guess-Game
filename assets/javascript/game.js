@@ -1,6 +1,3 @@
-//Variables
-
-
 //Variables for alphabet and possible words
 var words = ["aviato", "Gilfoyle", "Hooli", "Smart Fridge", "Palapa", "JIAN YANG", "Special Occasion", "Not A Hot Dog", "Rigby", "PIED PIIIIIIPER"];
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -9,28 +6,44 @@ var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
 
 //Variables for Wins & Remaining Guesses
 var winsNum = 0;
-var remainingGuessesNum = 12;
+var maxGuesses = 12;
+var remainingGuessesNum = 0;
 var guessedLetters = [];
+var generatedWord = [];
+var currentWord;
+var wins;
 
 
 //Variables that hold reference to the places in the HTML where we want to display things.
-var winsText = document.getElementById("winsnumber-text");
-var currentWordDashesText = document.getElementById ("currentWordDashes-text")
-var guessedLettersText = document.getElementById ("guessedLetters-text")
-var remainingGuessesText = document.getElementById ("remainingGesses-text")
+var winsText = document.getElementById("winsNumber-text");
+var currentWordDashesText = document.getElementById("currentWordDashes-text");
+var guessedLettersText = document.getElementById("guessedLetters-text");
+var remainingGuessesText = document.getElementById("remainingGuesses-text");
 
-//Add input to HTML
-guessedLettersText.textContent = "Placeholder: " + userGuess;
 
-console.log(guessedLetters.textContent);
 
-//Generates random word from Words array
-var randomValue = words[Math.floor(Math.random() * words.length)];
+//START OF GAME; Sets "guessed letters" to Zero
+function startGame() {
 
-var currentWord = randomValue;
+        remainingGuessesNum = maxGuesses;
 
-console.log(currentWord);
+    //Generates Random Word and sets it to generatedWord variable
+    var randomValue = words[Math.floor(Math.random() * words.length)];
 
+    generatedWord = randomValue;
+    
+    console.log(generatedWord);
+
+    // for (var i=0; i < generatedWord.length;i++){
+    //     currentWordDashesText.push("_");
+    // }
+
+    
+
+    
+
+}
+console.log(startGame());
 
 
 //User input - function runs whenever a user presses a key.
@@ -41,26 +54,39 @@ var userGuess = document.onkeyup = function (event) {
 
     console.log(event);
 
-    function addUserLetter() {
+    for (i = 0; i < remainingGuessesNum; i++) {
+        function addUserLetter() {
 
-        document.getElementById("guess-text").textContent = userGuess;
+            document.getElementById("guessedLetters-text").innerHTML = userGuess;
 
 
+        }
+
+        addUserLetter();
     }
 
-    addUserLetter();
+    //Removes User's Guess from Remaining Guesses
 
-    
+    // for (i = 0; i < 12; i++) {
+    //     remainingGuessesNum - 1;
 
+    //     console.log(remainingGuessesNum)
+    // }
+
+
+
+
+
+
+    //Displays User's input in game & adds user's input to guessed letters
+    // for (g = 0; g < remainingGuessesNum; g++) {
+    //     (remainingGuessesNum - 1);
+    //     console.log(remainingGuessesNum);
+    // }
 
 }
 
-//Displays User's input in game & adds user's input to guessed letters
-for (g = 0; g < remainingGuessesNum; g++){
-    (remainingGuessesNum - 1);
-    console.log(remainingGuessesNum);
-}
-
+//Removes user's guess from Remaining Guesses
 
 
 
@@ -68,17 +94,11 @@ for (g = 0; g < remainingGuessesNum; g++){
 
 
 //INSERT FOR LOOP FOR DASHES - HOW DO I GET DASHES TO REPEAT?//
-String.prototype.repeat = function (times) {
-    return (new Array(times + 1)).join(this);
-}
-var guessedLetters = "";
-var i;
-for (i = 0; i < currentWord.length; i++) {
-
-    var s = ("_").repeat(currentWord.length);
 
 
-}
+
+
+
 
 //Win Function
 
@@ -103,4 +123,4 @@ for (i = 0; i < currentWord.length; i++) {
 //Questions
 
 //1. How do I get guessed letters to appear?
-//2. 
+//2. How do I get dashes to appear
