@@ -1,5 +1,5 @@
 //Variables for alphabet and possible words
-var words = ["aviato", "Gilfoyle", "Hooli", "Smart Fridge", "Palapa", "JIAN YANG", "Special Occasion", "Not A Hot Dog", "Rigby", "PIED PIIIIIIPER"];
+var words = ["aviato", "Gilfoyle", "Hooli", "Palapa", "JIANYANG", "Rigby","Erlich","Octopus",];
 var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 
@@ -9,14 +9,15 @@ var winsNum = 0;
 var maxGuesses = 12;
 var remainingGuessesNum = 0;
 var guessedLetters = [];
-var generatedWord = [];
+var generatedWord;
+var underscore = [];
 var currentWord;
 var wins;
 
 
 //Variables that hold reference to the places in the HTML where we want to display things.
 var winsText = document.getElementById("winsNumber-text");
-var currentWordDashesText = document.getElementById("currentWordDashes-text");
+var currentWordDashesText = document.getElementById("currentWordDashestext");
 var guessedLettersText = document.getElementById("guessedLetters-text");
 var remainingGuessesText = document.getElementById("remainingGuesses-text");
 
@@ -31,28 +32,33 @@ function startGame() {
     var randomValue = words[Math.floor(Math.random() * words.length)];
 
     generatedWord = randomValue;
-    
+    underscore = [];
     console.log(generatedWord);
 
-    // for (var i=0; i < generatedWord.length;i++){
-    //     currentWordDashesText.push("_");
-    // }
+    for (var i=0; i < generatedWord.length;i++){
+        underscore.push("_");
+    }
+    
+    document.getElementById("currentWordDashesText").innerHTML = underscore;
 
     
-
-    
-
 }
-console.log(startGame());
+startGame();
+// console.log(startGame());
 
 
 //User input - function runs whenever a user presses a key.
-var userGuess = document.onkeyup = function (event) {
+var userGuess = document.onkeyup = function (guessEvent) {
+
+    remainingGuessesNum--;
+    document.getElementById("remainingGuesses-text").innerHTML = remainingGuessesNum;
+    if (remainingGuessesNum === 0){startGame();}
+
 
     //Forces user guess to be lowercase
-    userGuess = event.key.toLowerCase();
+    userGuess = guessEvent.key.toLowerCase();
 
-    console.log(event);
+    console.log(guessEvent);
 
     for (i = 0; i < remainingGuessesNum; i++) {
         function addUserLetter() {
@@ -64,8 +70,13 @@ var userGuess = document.onkeyup = function (event) {
 
         addUserLetter();
     }
+}
 
-    //Removes User's Guess from Remaining Guesses
+
+
+
+
+//Removes User's Guess from Remaining Guesses
 
     // for (i = 0; i < 12; i++) {
     //     remainingGuessesNum - 1;
@@ -84,7 +95,6 @@ var userGuess = document.onkeyup = function (event) {
     //     console.log(remainingGuessesNum);
     // }
 
-}
 
 //Removes user's guess from Remaining Guesses
 
