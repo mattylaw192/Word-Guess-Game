@@ -1,136 +1,131 @@
 //Variables for alphabet and possible words
-var words = ["aviato", "Gilfoyle", "Hooli", "Palapa", "JIANYANG", "Rigby","Erlich","Octopus",];
-var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var words = ["AVIATO", "GILFOYLE", "HOOLI", "PALAPA", "JIANYANG", "RIGBY", "ERLICH", "OCTOPUS"];
 
 
 
 //Variables for Wins & Remaining Guesses
-var winsNum = 0;
-var maxGuesses = 12;
-var remainingGuessesNum = 0;
-var guessedLetters = [];
-var generatedWord;
-var underscore = [];
-var currentWord;
-var wins;
+var winsNum = 0;    //Total number of wins 
+var maxGuesses = 10;    //Total number of allowed guesses 
+var remainingGuessesNum = 0; //How many guesses left
+var guessedLetters = []; //Array of letters that were guessed by a user
+var generatedWord; //Current word being used
+var underscore = []; //underscores
+var gameFinished = false;
 
 
 //Variables that hold reference to the places in the HTML where we want to display things.
 var winsText = document.getElementById("winsNumber-text");
-var currentWordDashesText = document.getElementById("currentWordDashestext");
+var currentWordDashesText = document.getElementById("currentWordDashes-text");
 var guessedLettersText = document.getElementById("guessedLetters-text");
 var remainingGuessesText = document.getElementById("remainingGuesses-text");
+var restartGame = document.getElementById("restart-game");
 
 
 
 //START OF GAME; Sets "guessed letters" to Zero
 function startGame() {
 
-        remainingGuessesNum = maxGuesses;
+    //remaingingGuessesNum = 10
+    remainingGuessesNum = maxGuesses;
 
     //Generates Random Word and sets it to generatedWord variable
     var randomValue = words[Math.floor(Math.random() * words.length)];
 
     generatedWord = randomValue;
     underscore = [];
+    guessedLetters = [];
     console.log(generatedWord);
 
-    for (var i=0; i < generatedWord.length;i++){
-        underscore.push("_");
+    for (var i = 0; i < generatedWord.length; i++) {
+        generatedWord[i] += underscore.push("_");
     }
-    
-    document.getElementById("currentWordDashesText").innerHTML = underscore;
 
-    
-}
+
+    document.getElementById("currentWordDashes-text").innerHTML = underscore;
+
+    updateDisplay();
+};
 startGame();
-// console.log(startGame());
 
 
-//User input - function runs whenever a user presses a key.
-var userGuess = document.onkeyup = function (guessEvent) {
+function updateDisplay() {
+    document.getElementById("winsNumber-text").innerHTML = winsNum;
+    //concatenate and remove commas
+    var guessingWordText = " ";
 
-    remainingGuessesNum--;
-    document.getElementById("remainingGuesses-text").innerHTML = remainingGuessesNum;
-    if (remainingGuessesNum === 0){startGame();}
-
-
-    //Forces user guess to be lowercase
-    userGuess = guessEvent.key.toLowerCase();
-
-    console.log(guessEvent);
-
-    for (i = 0; i < remainingGuessesNum; i++) {
-        function addUserLetter() {
-
-            document.getElementById("guessedLetters-text").innerHTML = userGuess;
+    for (i = 0; i < underscore.length; i++) {
+        guessingWordText += underscore[i];
+    }
+    document.getElementById("currentWordDashes-text").innerText = guessingWordText;
+    document.getElementById("remainingGuesses-text").innerText = remainingGuessesNum;
+    document.getElementById("guessedLetters-text").innerText = guessedLetters;
 
 
+};
+
+function evaluateGuess(letter) {
+    var positions = [];
+
+    for (i = 0; i < generatedWord.length; i++) {
+        if (generatedWord[i] === letter) {
+            positions.push(i);
         }
+    }
 
-        addUserLetter();
+    if (positions.length <= 0) {
+        remainingGuessesNum--;
+    }
+    else {
+        for (var i = 0; i < positions.length; i++) {
+            underscore[positions[i]] = letter;
+        }
+    }
+};
+
+function win() {
+    if (underscore.indexOf("_") === -1) {
+            winsNum++
+            {alert("Special Occasion! (̅_̅_̅_̅(̅_̅_̅_̅_̅_̅_̅̅_̅()ڪے");
+    }}  
+
+};
+
+function loss() {
+    if (remainingGuessesNum <= 0) {
+        alert("Don't Touch Anything. Failure is Contagious- Erlich Bachman");
     }
 }
 
+// Makes a guess
+function makeGuess(letter) {
+    if (remainingGuessesNum > 0) {
+            if (guessedLetters.indexOf(letter) === -1) {
+            guessedLetters.push(letter);
+            evaluateGuess(letter);
+        }
+    }
+
+};
 
 
+//logs user keys
+var userGuess = document.onkeyup = function (event) {
+    if (gameFinished) {
+        startGame();
+        gameFinished = false;
+    } else {
 
+        if (event.keyCode >= 65 && event.keyCode <= 90) {
 
-//Removes User's Guess from Remaining Guesses
+            makeGuess(event.key.toUpperCase());
+            updateDisplay();
+            win();
+            loss();
+        }
+        // userGuess = event.key.toLowerCase();
+    }
 
-    // for (i = 0; i < 12; i++) {
-    //     remainingGuessesNum - 1;
+};
 
-    //     console.log(remainingGuessesNum)
-    // }
-
-
-
-
-
-
-    //Displays User's input in game & adds user's input to guessed letters
-    // for (g = 0; g < remainingGuessesNum; g++) {
-    //     (remainingGuessesNum - 1);
-    //     console.log(remainingGuessesNum);
-    // }
-
-
-//Removes user's guess from Remaining Guesses
-
-
-
-
-
-
-//INSERT FOR LOOP FOR DASHES - HOW DO I GET DASHES TO REPEAT?//
-
-
-
-
-
-
-//Win Function
-
-
-
-//Work by small pieces. Use console.log or alert to keep testing
-
-
-//Create code to "press any key to start game" Test
-
-//start with a word. Find length of word. //
-
-//If statement to actually start game. This would actually populate the dashes for the letters//
-
-//Think step by step. Pick a word function//
-
-//How do you get the correct number of _ _ _ for a word? - Try "For Loop"//
-
-//How do you replace a dash with a user guess?//
-
-
-//Questions
-
-//1. How do I get guessed letters to appear?
-//2. How do I get dashes to appear
+//restart game
+document.getElementById("restart-game").onclick = function () { startGame() };
